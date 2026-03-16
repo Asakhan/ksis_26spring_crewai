@@ -1,0 +1,182 @@
+[
+    {
+      "id": "N01",
+      "type": "normal",
+      "user_input": "I bought this product three days ago. Can I get a refund?",
+      "expected_intent": "refund",
+      "expected_policy_key": "refund_policy",
+      "expected_answer_status": "success",
+      "notes": "Simple refund request within 7 days."
+    },
+    {
+      "id": "N02",
+      "type": "normal",
+      "user_input": "The item is defective. Can I get a refund after two weeks?",
+      "expected_intent": "refund",
+      "expected_policy_key": "refund_policy",
+      "expected_answer_status": "success",
+      "notes": "Defective product refund within 30 days."
+    },
+    {
+      "id": "N03",
+      "type": "normal",
+      "user_input": "Can I exchange an unopened product that I purchased last week?",
+      "expected_intent": "exchange",
+      "expected_policy_key": "exchange_policy",
+      "expected_answer_status": "success",
+      "notes": "Standard exchange case."
+    },
+    {
+      "id": "N04",
+      "type": "normal",
+      "user_input": "My product arrived damaged. Is exchange possible?",
+      "expected_intent": "exchange",
+      "expected_policy_key": "exchange_policy",
+      "expected_answer_status": "success",
+      "notes": "Defective product exchange."
+    },
+    {
+      "id": "N05",
+      "type": "normal",
+      "user_input": "How long does delivery usually take after payment?",
+      "expected_intent": "delivery",
+      "expected_policy_key": "delivery_policy",
+      "expected_answer_status": "success",
+      "notes": "Standard delivery time question."
+    },
+    {
+      "id": "N06",
+      "type": "normal",
+      "user_input": "Can I track my shipment with a tracking number?",
+      "expected_intent": "delivery",
+      "expected_policy_key": "delivery_policy",
+      "expected_answer_status": "success",
+      "notes": "Delivery tracking question."
+    },
+    {
+      "id": "N07",
+      "type": "normal",
+      "user_input": "When are membership benefits activated?",
+      "expected_intent": "membership",
+      "expected_policy_key": "membership_policy",
+      "expected_answer_status": "success",
+      "notes": "Membership activation."
+    },
+    {
+      "id": "N08",
+      "type": "normal",
+      "user_input": "Can I transfer my membership points to another account?",
+      "expected_intent": "membership",
+      "expected_policy_key": "membership_policy",
+      "expected_answer_status": "success",
+      "notes": "Point transfer restriction."
+    },
+    {
+      "id": "N09",
+      "type": "normal",
+      "user_input": "I paid for my order but it has not shipped yet. Can I cancel it?",
+      "expected_intent": "cancel",
+      "expected_policy_key": "cancel_policy",
+      "expected_answer_status": "success",
+      "notes": "Cancelable order before shipment."
+    },
+    {
+      "id": "N10",
+      "type": "normal",
+      "user_input": "My order has already been shipped. Can I still cancel it?",
+      "expected_intent": "cancel",
+      "expected_policy_key": "cancel_policy",
+      "expected_answer_status": "success",
+      "notes": "Cancellation not allowed after shipment."
+    },
+    {
+      "id": "A01",
+      "type": "ambiguous",
+      "user_input": "I want to return this item.",
+      "expected_intent": "refund",
+      "expected_policy_key": "refund_policy",
+      "expected_answer_status": "needs_clarification",
+      "notes": "Need purchase date, usage status, and defect status."
+    },
+    {
+      "id": "A02",
+      "type": "ambiguous",
+      "user_input": "My order is taking too long. What can I do?",
+      "expected_intent": "delivery",
+      "expected_policy_key": "delivery_policy",
+      "expected_answer_status": "needs_clarification",
+      "notes": "Need shipping status and order timing."
+    },
+    {
+      "id": "A03",
+      "type": "ambiguous",
+      "user_input": "Can I change this product?",
+      "expected_intent": "exchange",
+      "expected_policy_key": "exchange_policy",
+      "expected_answer_status": "needs_clarification",
+      "notes": "Need purchase date and product condition."
+    },
+    {
+      "id": "A04",
+      "type": "ambiguous",
+      "user_input": "Why are my membership benefits not working?",
+      "expected_intent": "membership",
+      "expected_policy_key": "membership_policy",
+      "expected_answer_status": "needs_clarification",
+      "notes": "Need account verification status."
+    },
+    {
+      "id": "A05",
+      "type": "ambiguous",
+      "user_input": "I want to stop this order.",
+      "expected_intent": "cancel",
+      "expected_policy_key": "cancel_policy",
+      "expected_answer_status": "needs_clarification",
+      "notes": "Need shipment status."
+    },
+    {
+      "id": "E01",
+      "type": "tool_error",
+      "user_input": "Can I get a refund for a defective item?",
+      "expected_intent": "refund",
+      "expected_policy_key": "refund_policy",
+      "expected_answer_status": "tool_error",
+      "notes": "Force tool failure during refund policy lookup."
+    },
+    {
+      "id": "E02",
+      "type": "tool_error",
+      "user_input": "Is exchange possible for an unopened item?",
+      "expected_intent": "exchange",
+      "expected_policy_key": "exchange_policy",
+      "expected_answer_status": "tool_error",
+      "notes": "Force tool failure during exchange policy lookup."
+    },
+    {
+      "id": "E03",
+      "type": "tool_error",
+      "user_input": "How many days does delivery take?",
+      "expected_intent": "delivery",
+      "expected_policy_key": "delivery_policy",
+      "expected_answer_status": "tool_error",
+      "notes": "Force tool failure during delivery policy lookup."
+    },
+    {
+      "id": "E04",
+      "type": "tool_error",
+      "user_input": "When is my membership grade updated?",
+      "expected_intent": "membership",
+      "expected_policy_key": "membership_policy",
+      "expected_answer_status": "tool_error",
+      "notes": "Force tool failure during membership policy lookup."
+    },
+    {
+      "id": "E05",
+      "type": "tool_error",
+      "user_input": "Can I cancel an order before shipment?",
+      "expected_intent": "cancel",
+      "expected_policy_key": "cancel_policy",
+      "expected_answer_status": "tool_error",
+      "notes": "Force tool failure during cancel policy lookup."
+    }
+  ]

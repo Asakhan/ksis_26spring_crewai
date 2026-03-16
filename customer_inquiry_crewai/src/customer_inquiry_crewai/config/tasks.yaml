@@ -1,17 +1,121 @@
-research_task:
+intent_analysis_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
-  expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    Analyze the customer's inquiry and classify it into exactly one intent.
 
-reporting_task:
-  description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Allowed intents:
+    - refund
+    - exchange
+    - delivery
+    - membership
+    - cancel
+    - unknown
+
+    Rules:
+    1. Select exactly one intent.
+    2. Decide whether policy lookup is required.
+    3. If the inquiry is ambiguous or lacks essential information, set ambiguity to true.
+    4. If intent cannot be determined confidently, use "unknown".
+    5. Do not answer the customer directly.
+    6. Your output must strictly conform to the required structured schema.
+
+    Additional constraints:
+    - policy_key must be one of:
+      refund_policy, exchange_policy, delivery_policy, membership_policy, cancel_policy, ""
+    - If intent is unknown, set needs_policy_lookup=false and policy_key="".
+    - If ambiguity=true, include missing_info as a list of missing items.
+
+    Output JSON schema:
+    {
+      "intent": "refund|exchange|delivery|membership|cancel|unknown",
+      "needs_policy_lookup": true,
+      "policy_key": "string",
+      "ambiguity": false,
+      "missing_info": []
+    }
+
+    Customer inquiry:
+    {customer_query}
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A structured object matching the required schema exactly.
+  agent: intent_analyst
+
+policy_retrieval_task:
+  description: >
+    Retrieve policy information based strictly on the structured result of the previous task, intent_analysis_task.
+
+    This task must depend on the previous task result.
+    Read the output of intent_analysis_task and use:
+    - needs_policy_lookup
+    - policy_key
+
+    Do not re-interpret the customer inquiry.
+    Do not re-classify the intent.
+    Do not choose a different policy_key on your own.
+
+    Decision rules:
+    1. If needs_policy_lookup is false, do not call the tool and return:
+      - tool_status = "not_found"
+      - policy_key = ""
+      - policy_text = ""
+      - error_message = ""
+    2. If policy_key is missing, empty, or invalid, do not call the tool and return:
+      - tool_status = "not_found"
+      - policy_key = ""
+      - policy_text = ""
+      - error_message = ""
+    3. If needs_policy_lookup is true and policy_key is valid, call the get_policy tool exactly once.
+    4. When calling the tool, you must pass:
+      - policy_key from the previous task result
+      - scenario_id from the crew input
+    5. The scenario_id is used for controlled experiment test scenarios, including simulated tool error cases.
+    6. If the tool returns an error, preserve the error state exactly as returned.
+    7. Do not invent, summarize, or modify policy text.
+    8. Output must strictly follow the required JSON schema.
+
+    Customer inquiry:
+    {customer_query}
+
+    Scenario ID:
+    {scenario_id}
+
+  expected_output: >
+    Return a valid JSON object only, with exactly the following schema:
+    {
+      "tool_status": "success|not_found|error",
+      "policy_key": "string",
+      "policy_text": "string",
+      "error_message": "string"
+    }
+  agent: policy_retriever
+  context:
+    - intent_analysis_task
+
+response_generation_task:
+  description: >
+    Generate final response using:
+    - original inquiry
+    - intent result
+    - policy retrieval result
+
+    Rules:
+    1. Never invent policy.
+    2. Use policy_text only if tool_status="success".
+    3. If ambiguity=true, ask for clarification.
+    4. Return valid JSON only.
+
+    Output JSON schema:
+    {
+      "answer": "string",
+      "answer_status": "success|needs_clarification|tool_error|policy_not_found",
+      "used_policy_key": "string"
+    }
+
+    Original inquiry:
+    {customer_query}
+
+  expected_output: >
+    Valid JSON object following the schema.
+  agent: response_generator
+  context:
+    - intent_analysis_task
+    - policy_retrieval_task

@@ -1,0 +1,52 @@
+{
+    "refund_policy": {
+      "title": "Refund Policy",
+      "category": "refund",
+      "content": [
+        "Refunds are allowed within 7 days of purchase.",
+        "Proof of payment is required for all refund requests.",
+        "Refund is not allowed if the product has been opened or used, unless the item is defective.",
+        "If the product is defective, refund may be approved within 30 days of purchase."
+      ]
+    },
+    "exchange_policy": {
+      "title": "Exchange Policy",
+      "category": "exchange",
+      "content": [
+        "Exchange is allowed within 14 days of purchase.",
+        "Only unopened and unused products can be exchanged, unless the product is defective.",
+        "Customers must provide an order number or proof of purchase.",
+        "Exchange for defective products may be approved within 30 days."
+      ]
+    },
+    "delivery_policy": {
+      "title": "Delivery Policy",
+      "category": "delivery",
+      "content": [
+        "Standard delivery takes 2 to 5 business days after payment confirmation.",
+        "Remote areas may require additional 2 business days.",
+        "If the order status is marked as shipped, delivery cannot be canceled through customer service and must follow the return policy after delivery.",
+        "Customers can track delivery using the tracking number."
+      ]
+    },
+    "membership_policy": {
+      "title": "Membership Policy",
+      "category": "membership",
+      "content": [
+        "Membership benefits are activated after account verification.",
+        "Membership points are earned only for completed purchases.",
+        "Membership grade is updated once per month based on the previous month's purchase amount.",
+        "Points cannot be transferred to another account."
+      ]
+    },
+    "cancel_policy": {
+      "title": "Cancellation Policy",
+      "category": "cancel",
+      "content": [
+        "Orders can be canceled only before shipment confirmation.",
+        "If payment is completed but shipment has not started, cancellation is allowed.",
+        "If the order has already been shipped, cancellation is not allowed and the customer must request a return after delivery.",
+        "Promotional coupon benefits used for the canceled order may be withdrawn after cancellation."
+      ]
+    }
+  }
